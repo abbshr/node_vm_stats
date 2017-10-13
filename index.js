@@ -32,7 +32,7 @@ class VMStats {
       cpuTime: { frequency: FREQUENCY },
       thread: { frequency: FREQUENCY },
       fd: { frequency: FREQUENCY },
-      report(type, metrics) { console.log(type, metrics); }
+      report(type, pid, metrics) { console.log(type, pid, metrics); }
     };
   }
 
@@ -149,31 +149,31 @@ class VMStats {
   }
 
   reportGC(metrics) {
-    this._report("gc", metrics);
+    this._report("gc", this.PID, metrics);
   }
 
   reportMemory(metrics) {
-    this._report("memory", metrics);
+    this._report("memory", this.PID, metrics);
   }
 
   reportCPU(metrics) {
-    this._report("cpu", metrics);
+    this._report("cpu", this.PID, metrics);
   }
 
   reportEventLoop(metrics) {
-    this._report("eventloop", metrics);
+    this._report("eventloop", this.PID, metrics);
   }
 
   reportThread(metrics) {
-    this._report("thread_count", metrics);
+    this._report("thread_count", this.PID, metrics);
   }
 
   reportFd(metrics) {
-    this._report("fd_count", metrics);
+    this._report("fd_count", this.PID, metrics);
   }
 
   reportError(type, error) {
-    this._report("sample_error", { type, error });
+    this._report("sample_error", this.PID, { type, error });
   }
 }
 

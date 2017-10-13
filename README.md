@@ -62,7 +62,7 @@ FREQUENCY = 15 * 1000; // unit: millisecond, how often do you want to collect th
   frequency: FREQUENCY,
 
   // a callback to report metrics and theirs type
-  report(type, metrics) { console.log(type, metrics); }
+  report(type, pid, metrics) { console.log(type, pid, metrics); }
 }
 ```
 

@@ -4,7 +4,7 @@ module.exports = {
   cpuTime: { frequency: 6 * 1000 },
   eventLoop: { frequency: 10 * 1000 },
 
-  report(type, metrics) {
-    console.log(type, metrics);
+  report(type, pid, metrics) {
+    console.log(type, pid, metrics);
   }
 };
