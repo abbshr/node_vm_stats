@@ -19,7 +19,7 @@ This module uses `newrelic/native-metrics` package inside, to collect underlying
 # Install
 
 ```bash
-npm i github/abbshr:vm-stats
+npm i github:abbshr/node_vm_stats
 ```
 
 # API
