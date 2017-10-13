@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@newrelic/native-metrics": "^2.1.2",
+    "v8-profiler": "^5.7.0"
+  },
+  "name": "vm-stats",
+  "version": "1.0.0",
+  "description": "node.js vm metrics collection",
+  "main": "index.js",
+  "author": "ran <abbshrsoufii@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
