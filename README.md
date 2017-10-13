@@ -1,6 +1,8 @@
 Node.js VM layer metric statistics utility
 ===
 
+In Node.js 8.x.
+
 Just a lite version newrelic-agent, because I just wanna to collection some vm metrics ;)
 
 yeah, some code from newrelic-agent ;)
@@ -8,7 +10,6 @@ yeah, some code from newrelic-agent ;)
 This module uses `newrelic/native-metrics` package inside, to collect underlying metrics, they are:
 
 - process cpu usage/utilization
-- vm cpu usage/utilization
 - memory usage
 - v8 heap space stats
 - gc duration and type
@@ -56,7 +57,6 @@ FREQUENCY = 15 * 1000; // unit: millisecond, how often do you want to collect th
   memory: { frequency: FREQUENCY },
   eventLoop: { frequency: FREQUENCY },
   cpuTime: { frequency: FREQUENCY },
-  vmCpuTime: { frequency: FREQUENCY },
   thread: { frequency: FREQUENCY },
   fd: { frequency: FREQUENCY },
   frequency: FREQUENCY,
@@ -68,4 +68,5 @@ FREQUENCY = 15 * 1000; // unit: millisecond, how often do you want to collect th
 
 # Metrics details & others
 
-see src comments
+- see src comments
+- see Newrelic Agent Doc: https://docs.newrelic.com/docs/agents/nodejs-agent/supported-features/nodejs-vm-measurements#garbage

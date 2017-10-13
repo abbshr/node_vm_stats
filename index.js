@@ -11,12 +11,11 @@ class VMStats {
   }
 
   start() {
-    this.collector = nativeMetrics({ timeout: this.config.vmCpuTime.frequency });
+    this.collector = nativeMetrics();
 
     if (this.config.gc) this.gc();
     if (this.config.memory) this.memory();
     if (this.config.cpuTime) this.cpuTime();
-    if (this.config.vmCpuTime) this.vmCpuTime();
     if (this.config.eventLoop) this.eventLoop();
 
     if (os.platform() != "linux") return;
@@ -31,10 +30,8 @@ class VMStats {
       memory: { frequency: FREQUENCY },
       eventLoop: { frequency: FREQUENCY },
       cpuTime: { frequency: FREQUENCY },
-      vmCpuTime: { frequency: FREQUENCY },
       thread: { frequency: FREQUENCY },
       fd: { frequency: FREQUENCY },
-      frequency: FREQUENCY,
       report(type, metrics) { console.log(type, metrics); }
     };
   }
@@ -82,7 +79,7 @@ class VMStats {
         heapTotal, // v8 总共申请的堆内存
         nonHeapUsed, // v8 使用的非堆内存
         heapSizeLimit, // v8 堆内存上限
-        totalPhysicalSize // v8 当前使用的物理内存
+        totalPhysicalSize // v8 commited 的内存
       };
 
       this.reportMemory(metrics);
@@ -103,17 +100,6 @@ class VMStats {
     }, this.config.cpuTime.frequency);
   }
 
-  // 虚拟机层面（不包括用户代码）的 cpu 时间及利用率
-  vmCpuTime() {
-    let lastSampleTime = Date.now() - process.uptime() * 1000;
-
-    this.collector.on("usage", ({ diff: { ru_utime, ru_stime } }) => {
-      let metrics = this._cpuTimeMetrics(lastSampleTime, ru_utime, ru_stime);
-      lastSampleTime = Date.now();
-      this.reportVmCPU(metrics);
-    });
-  }
-
   // 单位：毫秒
   _cpuTimeMetrics(lastSampleTime, utime, stime) {
     let elapsed = Date.now() - lastSampleTime;
@@ -127,7 +113,8 @@ class VMStats {
     };
   }
 
-  // tick 消耗的 cpu 时间，tick 次数
+  // ticks 消耗的 cpu 时间，tick 次数
+  // The total CPU time spent actively executing in each event loop tick. 
   eventLoop() {
     setInterval(() => {
       // 单位: 微秒
@@ -171,10 +158,6 @@ class VMStats {
 
   reportCPU(metrics) {
     this._report("cpu", metrics);
-  }
-
-  reportVmCPU(metrics) {
-    this._report("vm_cpu", metrics);
   }
 
   reportEventLoop(metrics) {
