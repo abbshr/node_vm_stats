@@ -126,7 +126,7 @@ class VMStats {
   // vm 开启的线程数量
   thread() {
     setInterval(() => {
-      this._readProcDir("thread", (threads) => { this.reportThread(threads.length); });
+      this._readProcDir("task", (threads) => { this.reportThread(threads.length); });
     }, this.config.thread.frequency);
   }
 
