@@ -145,35 +145,35 @@ class VMStats {
   }
 
   _report(type, metrics) {
-    this.config.report(type, metrics);
+    this.config.report(type, this.PID, metrics);
   }
 
   reportGC(metrics) {
-    this._report("gc", this.PID, metrics);
+    this._report("gc", metrics);
   }
 
   reportMemory(metrics) {
-    this._report("memory", this.PID, metrics);
+    this._report("memory", metrics);
   }
 
   reportCPU(metrics) {
-    this._report("cpu", this.PID, metrics);
+    this._report("cpu", metrics);
   }
 
   reportEventLoop(metrics) {
-    this._report("eventloop", this.PID, metrics);
+    this._report("eventloop", metrics);
   }
 
   reportThread(metrics) {
-    this._report("thread_count", this.PID, metrics);
+    this._report("thread_count", metrics);
   }
 
   reportFd(metrics) {
-    this._report("fd_count", this.PID, metrics);
+    this._report("fd_count", metrics);
   }
 
   reportError(type, error) {
-    this._report("sample_error", this.PID, { type, error });
+    this._report("sample_error", { type, error });
   }
 }
 
