@@ -83,7 +83,7 @@ class VMStats {
       };
 
       this.reportMemory(metrics);
-    }, this.config.memory.frequency);
+    }, this.config.memory.frequency).unref();
   }
 
   // 进程的 cpu 时间及利用率
@@ -97,7 +97,7 @@ class VMStats {
       let metrics = this._cpuTimeMetrics(lastSampleTime, user / 1000, system / 1000);
       lastSampleTime = Date.now();
       this.reportCPU(metrics);
-    }, this.config.cpuTime.frequency);
+    }, this.config.cpuTime.frequency).unref();
   }
 
   // 单位：毫秒
@@ -120,21 +120,21 @@ class VMStats {
       // 单位: 微秒
       let loopMetrics = this.collector.getLoopMetrics();
       this.reportEventLoop(loopMetrics);
-    }, this.config.eventLoop.frequency);
+    }, this.config.eventLoop.frequency).unref();
   }
 
   // vm 开启的线程数量
   thread() {
     setInterval(() => {
       this._readProcDir("task", (threads) => { this.reportThread(threads.length); });
-    }, this.config.thread.frequency);
+    }, this.config.thread.frequency).unref();
   }
 
   // vm 打开的文件描述符数量
   fd() {
     setInterval(() => {
       this._readProcDir("fd", (fds) => { this.reportFd(fds.length); });
-    }, this.config.fd.frequency);
+    }, this.config.fd.frequency).unref();
   }
 
   _readProcDir(name, callback) {
